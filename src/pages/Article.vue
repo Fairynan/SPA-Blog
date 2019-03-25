@@ -3,7 +3,6 @@
     <div class="article">
       <div v-html="content">zzz</div>
     </div>
-      <comment></comment>
   </div>
 </template>
 
@@ -19,18 +18,7 @@ marked.setOptions({
 export default {
   data() {
     return {
-      content: ''
-    }
-  },
-  watch: {
-    content(n, o) {
-      let _content = n
-      marked(_content, (err, content) => {
-        if (!err) {
-          _content = content
-        }
-      })
-      this.content = _content
+      content: ""
     }
   },
   created() {
@@ -38,9 +26,13 @@ export default {
   },
   methods: {
     getArticleDetails() {
-      getArticle({id: '57a30394128fe100546901d0'}).then(res => {
-        console.log(res)
-        this.content = res.articleDetails
+      getArticle({article_id: this.$route.query.article_id}).then(res => {
+        marked(res.article.article_content, (err, content) => {
+          if (!err) {
+            res.article.article_content = content
+          }
+        })
+        this.content = res.article.article_content
       })
     }
   }

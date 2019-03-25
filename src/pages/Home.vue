@@ -2,11 +2,11 @@
   <div class="list-wrapper">
     <ul class="list-container" id="list-ul">
       <li v-for="(item, index) in items" :key="index">
-        <router-link :to="{ path: 'article', params: {id: item.objectId}}">
-          <p class="list-title">{{item.title}}</p>
-          <p class="list-updated">{{item.createdAt}}</p>
-          <p class="list-abstract">{{item.abstract}}</p>
-        </router-link>
+        <a @click.prevent="getArticleDetails(item.article_id)">      
+          <p class="list-title">{{item.article_title}}</p>
+          <p class="list-updated">{{item.article_create_time}}</p>
+          <p class="list-abstract">{{item.article_summary}}</p>
+        </a>
       </li>
     </ul>
   </div>
@@ -27,9 +27,17 @@ export default {
     getArticleList() {
       getHomeList({articleTag: ''})
       .then(res => {
-        console.log(res)
-        this.items = res.articleList
+        this.items = res.article_list
+        console.log(this.items)
       }) 
+    },
+    getArticleDetails(id) {
+      this.$router.push({
+        path: 'article',
+        query: {
+          article_id: id
+        }
+      })
     }
   }
 }

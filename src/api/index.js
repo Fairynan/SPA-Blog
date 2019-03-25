@@ -8,7 +8,7 @@ export function getHomeList (data = {}) {
 
 // 获取文章内容
 export function getArticle (data = {}) {
-  return request({url: API_ROOT + '/api/article/', method: 'post'}, data)
+  return request({url: API_ROOT + '/api/getArticleDetails', method: 'post', data})
 }
 
 // 根据 文章 id 获取 comments
