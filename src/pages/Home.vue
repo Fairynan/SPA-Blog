@@ -1,4 +1,6 @@
 <template>
+<div class="app-catainer">
+  <category />
   <div class="list-wrapper">
     <ul class="list-container" id="list-ul">
       <li v-for="(item, index) in items" :key="index">
@@ -10,11 +12,16 @@
       </li>
     </ul>
   </div>
+</div>
 </template>
 
 <script>
 import { getHomeList } from '../api'
+import Category from './Category'
 export default {
+  components: {
+    Category
+  },
   data() {
     return {
       items: []

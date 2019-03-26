@@ -51,7 +51,7 @@ body a {
   color: inherit;
 }
 
-body ul, li, p {
+body ul, p {
   list-style: none;
   margin: 0;
   padding: 0;
