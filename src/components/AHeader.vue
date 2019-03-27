@@ -1,8 +1,7 @@
 
 <template>
   <div>
-    <div class="header-background"></div>
-    <ul :class="['nav', { 'nav-fixed': !isTop, 'nav-invisible': !isVisible }]">
+    <ul>
       <li>
         <router-link to="/home">主页</router-link>
       </li>
@@ -10,26 +9,22 @@
         <router-link to="/about">关于</router-link>
       </li>
       <li>
-        <router-link to="/tags">标签</router-link>
+        <router-link to="/login">登录</router-link>
       </li>
     </ul>
-    <div class="header-title"><h1 v-if="show" transition="fade">{{headlineFinal}}</h1></div>
   </div>
 </template>
 
 <script type="text/babel">
+export default {
+  data () {
+    return {
 
-  export default {
-    data () {
-      return {
-        show: true,
-        nav: 'nav',
-        isTop: true,
-        isVisible: true,
-        headlineFinal: '仙女楠的博客'
-      }
     }
+  },
+  methods: {
   }
+}
 </script>
 
 <style scoped>

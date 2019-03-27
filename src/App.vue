@@ -1,24 +1,10 @@
 <template>
   <div id="app">
-    <a-header class="header"/>
     <div class="main">
       <router-view class="main-wrapper" transition="fade" transition-mode="out-in"></router-view>
     </div>
-    <a-footer class="footer"/>
   </div>
 </template>
-
-<script>
-import AHeader from './components/AHeader'
-import AFooter from './pages/AFooter'
-export default {
-  name: 'app',
-  components: {
-    AHeader,
-    AFooter
-  }
-}
-</script>
 
 <style>
 html {
@@ -85,13 +71,6 @@ body ul, p {
   max-width: 80rem;
   transition: all .4s;
 }
-
-.footer {
-  order: 3;
-  display: flex;
-  height: 10rem;
-}
-
 @media screen and (max-width: 768px) {
   .main-wrapper {
     width: 100%;

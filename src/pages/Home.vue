@@ -1,5 +1,6 @@
 <template>
 <div class="app-catainer">
+  <a-header class="header"/>
   <category />
   <div class="list-wrapper">
     <ul class="list-container" id="list-ul">
@@ -12,15 +13,20 @@
       </li>
     </ul>
   </div>
+  <a-footer class="footer"/>
 </div>
 </template>
 
 <script>
 import { getHomeList } from '../api'
 import Category from './Category'
+import AHeader from '../components/AHeader'
+import AFooter from '../components/AFooter'
 export default {
   components: {
-    Category
+    Category,
+    AHeader,
+    AFooter
   },
   data() {
     return {
@@ -51,48 +57,54 @@ export default {
 </script>
 
 <style>
-  .list-container li {
-    border-bottom: 1px solid #eee;
-  }
+.list-container li {
+  border-bottom: 1px solid #eee;
+}
 
+.list-title {
+  font-size: 2.6rem;
+  font-weight: 400;
+  color: #404040;
+  margin-top: 0;
+}
+
+.list-abstract {
+  font-size: 1.6rem;
+  color: #919191;
+  font-weight: 300;
+}
+
+.list-updated {
+  font-family: "Comic Sans MS", curslve, sans-serif;
+  font-size: 1.8rem;
+  color: #8b8b8b;
+  padding: 5px 0;
+}
+
+.list-container li a {
+  padding: 1rem 1.5rem;
+  display: block;
+  transition: all .3s;
+  margin:0;
+}
+
+.list-container li a:hover {
+  background-color: Rgba(0, 0, 0, .02);
+}
+
+@media screen and (max-width: 768px) {
   .list-title {
-    font-size: 2.6rem;
-    font-weight: 400;
-    color: #404040;
-    margin-top: 0;
-  }
-
-  .list-abstract {
-    font-size: 1.6rem;
-    color: #919191;
-    font-weight: 300;
+    font-size: 2.2rem;
   }
 
   .list-updated {
-    font-family: "Comic Sans MS", curslve, sans-serif;
-    font-size: 1.8rem;
-    color: #8b8b8b;
-    padding: 5px 0;
+    font-size: 1.6rem;
   }
+}
+.footer {
+  order: 3;
+  display: flex;
+  height: 10rem;
+}
 
-  .list-container li a {
-    padding: 1rem 1.5rem;
-    display: block;
-    transition: all .3s;
-    margin:0;
-  }
-
-  .list-container li a:hover {
-    background-color: Rgba(0, 0, 0, .02);
-  }
-
-  @media screen and (max-width: 768px) {
-    .list-title {
-      font-size: 2.2rem;
-    }
-
-    .list-updated {
-      font-size: 1.6rem;
-    }
-  }
 </style>
