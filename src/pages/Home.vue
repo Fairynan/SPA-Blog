@@ -1,7 +1,8 @@
 <template>
 <div class="app-catainer">
   <a-header class="header"/>
-  <category />
+  <course-category />
+  <course-card v-for="(item,index) of courseList" :key="index" :init-data="item" />
   <div class="list-wrapper">
     <ul class="list-container" id="list-ul">
       <li v-for="(item, index) in items" :key="index">
@@ -19,18 +20,23 @@
 
 <script>
 import { getHomeList } from '../api'
-import Category from './Category'
+import request from '../utils/request'
 import AHeader from '../components/AHeader'
+import CourseCategory from '../components/CourseCategory/CourseCategory'
+import CourseCard from '../components/CourseCard/CourseCard'
 import AFooter from '../components/AFooter'
+import {courseList} from '../constant/index'
 export default {
   components: {
-    Category,
+    CourseCategory,
     AHeader,
-    AFooter
+    AFooter,
+    CourseCard
   },
   data() {
     return {
-      items: []
+      items: [],
+      courseList: courseList
     }
   },
   created() {

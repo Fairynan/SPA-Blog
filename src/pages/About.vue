@@ -1,50 +1,38 @@
 <template>
-  <div class="about-wrapper fade-transition mian-wrapper">
-    <h2 class="list-title">张楠</h2>
-    <p>西理工 前端工程师 程序媛 小仙女</p>
-    <a href="https://github.com/jiangjiu">Github</a>
-    <a href="http://weibo.com/u/2900330731">微博</a>
-  </div>
+	<div>
+		<pdf
+			v-for="i in numPages"
+			:key="i"
+			:src="src"
+			:page="i"
+			style="display: inline-block; width: 25%"
+		></pdf>
+	</div>
 </template>
 
 <script>
-  export default {
 
-  }
+import pdf from 'vue-pdf'
+
+var loadingTask = pdf.createLoadingTask('http://nos.netease.com/edu-lesson-pdfsrc/BC34D8D95BB3052BE18AD739557E8902-1399859177228?Signature=%2FiquUbnPX94hEJCClF00ll%2FbeQZ2iO8hFeNOn2sZPNQ%3D&Expires=1555054647&NOSAccessKeyId=7ba71f968e4340f1ab476ecb300190fa&download=1+%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%92%8C%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80.pdf');
+
+export default {
+	components: {
+		pdf
+	},
+	data() {
+		return {
+			src: loadingTask,
+			numPages: undefined,
+		}
+	},
+	mounted() {
+
+		this.src.then(pdf => {
+
+			this.numPages = pdf.numPages;
+		});
+	}
+}
+
 </script>
-
-<style>
-  .about-wrapper {
-    width: 80%;
-    padding: 1rem;;
-  }
-
-  .about-wrapper a {
-    color: #4078c0;
-    display: block;
-    transition: all .4s;
-  }
-
-  .about-wrapper a:hover {
-    color: #80b2ff;
-  }
-
-  .about-wrapper p, .about-wrapper h2, .about-wrapper a {
-    margin: 1rem auto;
-  }
-
-  .about-wrapper p {
-    font-size: 1.8rem;
-  }
-
-  .about-wrapper a {
-    font-size: 1.6rem;
-  }
-
-  @media screen and (max-width: 768px) {
-    .about-wrapper p {
-      font-size: 1.6rem;
-    }
-
-  }
-</style>

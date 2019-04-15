@@ -9,7 +9,6 @@
 <script>
 import marked from 'marked'
 import Prism from 'prismjs'
-import 'prismjs/themes/prism.css'
 //import Comment from './Comment'
 import { getArticle } from '../api'
 marked.setOptions({
@@ -33,6 +32,7 @@ export default {
           }
         })
         this.content = res.article.article_content
+        console.log(this.content)
       })
     }
   }
