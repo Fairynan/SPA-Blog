@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div @mousemove="mouseMove">
     <div>
       <span>课件</span>
       <span>></span>
@@ -37,11 +37,12 @@
         </div>
       </el-row>
     </div>
-  <div>
-    <video v-if="currentPlay.type === 'video'" :src="currentPlay.href" width="100%" controls autoplay/>
-    <div v-else-if="currentPlay.type === 'markdown'" v-html="currentPlay.content"></div>
-    <div v-else-if="currentPlay.type === 'pdf'"><pdf :src="src"></pdf></div>
-  </div>
+    <div style="color: red">{{parseCountTime}}</div>
+    <div>
+      <video v-if="currentPlay.type === 'video'" :src="currentPlay.href" width="100%" controls autoplay/>
+      <div v-else-if="currentPlay.type === 'markdown'" v-html="currentPlay.content"></div>
+      <div v-else-if="currentPlay.type === 'pdf'"><pdf :src="src"></pdf></div>
+    </div>
   </div>
 </template>
 
@@ -65,7 +66,13 @@ export default {
       childKey: 0,
       currentPlay: '',
       src: '',
-      numPages: ''
+      numPages: '',
+      countTimeId: '',
+      countTime: 0,
+      videoMax: 20,
+      markdownMax: 5,
+      pdfMax: 10,
+      currentCountTime: 0 //当前累计未监听到事件时长
     }
   },
   created() {
@@ -74,6 +81,11 @@ export default {
     this.parentKey = parentKey
     this.childKey = childKey
     this.currentPlay = this.childOperation[0]
+    console.log(this.currentPlay,111111)
+    this.startInterval()
+  },
+  destroyed() {
+    clearInterval(this.countTimeId)
   },
   computed: {
     childData() {
@@ -82,9 +94,53 @@ export default {
     childOperation() {
       const child = this.childData && this.childData.find(item => item.key === this.childKey)
       return child && child.operations
-    } 
+    },
+    parseCountTime() {
+      const second = parseInt(this.countTime % 60)
+      const minute = parseInt(this.countTime / 60 % 60)
+      const hour = parseInt(this.countTime / 3600)
+      return `您已经学习了${hour}小时${minute}分${second}秒`
+    }
   },
   methods: {
+    startInterval() {
+      this.countTimeId = setInterval(() => {
+        this.countTime += 1
+        this.currentCountTime += 1
+        switch(this.currentPlay.type) {
+          case 'video':
+            if(this.currentCountTime > this.videoMax) {
+              this.alertWaning()
+            }
+            break
+          case 'markdown':
+            if(this.currentCountTime > this.markdownMax) {
+              this.alertWaning()
+            }
+            break
+          case 'pdf':
+            if(this.currentCountTime > this.pdfMax) {
+              this.alertWaning()
+            }
+            break
+          default:
+            break
+        }
+      }, 1000);
+    },
+    mouseMove() {
+      this.currentCountTime = 0
+    },
+    alertWaning(content = '您是否正在学习？', title = '提示') {
+      clearInterval(this.countTimeId)
+      this.$alert(content, title, {
+        confirmButtonText: '确定',
+        callback: () => {
+          this.currentCountTime = 0
+          this.startInterval()
+        }
+      })
+    },
     changeCurrentPlay(item) {
       this.currentPlay = item
       if(this.currentPlay.type === 'markdown') {
